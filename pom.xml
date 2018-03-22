@@ -93,7 +93,7 @@
                 <app-name>journey-adm</app-name>
                 <app-context>/journey-adm</app-context>
                 <app-package>jar</app-package>
-                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
+                <app-datasource-url>jdbc:postgresql://10.6.60.205:5432/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
             </properties>

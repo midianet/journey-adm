@@ -46,7 +46,7 @@ public class Person {
     private State     state;
 
     //private Bedroom   bedroom;
-    
+
     @Getter
     @AllArgsConstructor
     public enum Sex {
