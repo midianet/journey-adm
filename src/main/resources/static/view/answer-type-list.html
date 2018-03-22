@@ -1,0 +1,24 @@
+<div class="dataTable_wrapper">
+
+    <legend class="section" style="font-weight: 600;"> Tipo de Respostas</legend>
+    <div style="float: right">
+        <a href="#/resposta-tipo-form" class="btn btn-primary">Novo <i class="fa fa-plus"></i></a>
+    </div>
+
+    <table go-data-table edit-url="#/resposta-tipo-form" ajax="api/bedrooms/types/paginate" id="dt-list" class="display table table-hover" cellspacing="0" width="100%">
+        <thead>
+        <tr class="tr-cabecalho">
+            <th go-data-table-item name="id" style="width: 5%">Código</th>
+            <th go-data-table-item name="method">Método</th>
+            <th style="width: 5%"></th>
+            <th style="width: 5%"></th>
+        </tr>
+        <tr class="tr-filtros">
+            <th style="width: 10%;"><input id="id-search" restrict-to="[0-9]" type="text" placeholder="Código"/></th>
+            <th style="width: 80%;"><input id="method-search" type="text" style="width: 100%;" placeholder="Método"/></th>
+            <th style="width: 10%;">Editar</th>
+            <th style="width: 10%;">Remover</th>
+        </tr>
+        </thead>
+    </table>
+</div>

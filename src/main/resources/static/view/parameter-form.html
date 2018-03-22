@@ -1,0 +1,26 @@
+<div class="dataTable_wrapper">
+    <legend class="section" style="font-weight: 600;"> Edição de Parâmetro</legend>
+    <div style="float: right;">
+        <button class="btn btn-success" ng-disabled="frm.$invalid" ng-click="save()"  >Salvar <i class="fa fa-plus"></i></button>
+        <a href="#/parametro" class=" btn btn-primary" >Voltar <i class="fa fa-reply"></i></a>
+    </div>
+    <div class="row" style="padding-top:3em;">
+        <legend class="section" style="font-weight: 600;"></legend>
+        <form novalidate action="" name="frm" id="frm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="txKey">Chave</label>
+                        <input type="text" class="form-control" id="txKey" name="txKey" ng-model="parameter.key" maxlength="50" placeholder="Informe a chave." autofocus required />
+                        <span  style="color: #a94442;" ng-show="frm.txKey.$error.required && frm.txKey.$dirty">Campo Obrigatório</span>
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <label for="txValue">Valor</label>
+                        <textarea rows="6" class="form-control" id="txValue" name="txValue" ng-model="parameter.value" maxlength="2000" placeholder="Informe o valor." required  ></textarea>
+                        <span  style="color: #a94442;" ng-show="frm.txValue.$error.required && frm.txValue.$dirty">Campo Obrigatório</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

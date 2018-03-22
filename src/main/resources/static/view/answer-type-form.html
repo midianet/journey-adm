@@ -1,0 +1,21 @@
+<div class="dataTable_wrapper">
+    <legend class="section" style="font-weight: 600;"> Edição Tipo de Resposta</legend>
+    <div style="float: right;">
+        <button class="btn btn-success" ng-disabled="frm.$invalid" ng-click="save()"  >Salvar <i class="fa fa-plus"></i></button>
+        <a href="#/resposta-tipo" class=" btn btn-primary" >Voltar <i class="fa fa-reply"></i></a>
+    </div>
+    <div class="row" style="padding-top:3em;">
+        <legend class="section" style="font-weight: 600;"></legend>
+        <form novalidate action="" name="frm" id="frm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="method">Método</label>
+                        <input type="text" class="form-control" id="method" name="method" ng-model="type.method" maxlength="50" placeholder="Informe o método." autofocus required />
+                        <span  style="color: #a94442;" ng-show="frm.method.$error.required && frm.method.$dirty">Campo Obrigatório</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
