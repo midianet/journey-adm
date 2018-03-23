@@ -84,7 +84,7 @@ public class PersonResource {
 //        final DataTableResponse dt = new DataTableResponse();
         Long myId = id.isEmpty() ? null : Long.parseLong(id);
 //        dt.setDraw(draw);
-        try {
+//        try {
             Long qtTotal = repository.count();
             Map<String, String> searchParams = new HashMap<>();
             if (!searchValue.isEmpty()) {
