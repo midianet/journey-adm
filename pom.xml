@@ -6,14 +6,15 @@
     <groupId>midianet</groupId>
     <artifactId>journey-adm</artifactId>
     <version>1.0.0</version>
-    <packaging>${app-package}</packaging>
+    <!--<packaging>${app-package}</packaging>-->
+    <packaging>jar</packaging>
 
     <properties>
         <!--<thymeleaf.version>3.0.6.RELEASE</thymeleaf.version>-->
         <!--<thymeleaf-layout-dialect.version>2.2.1</thymeleaf-layout-dialect.version>-->
-        <java.version>9</java.version>
-        <maven.compiler.source>9</maven.compiler.source>
-        <maven.compiler.target>9</maven.compiler.target>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <parent>
@@ -39,10 +40,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
@@ -94,11 +95,11 @@
             <id>dev</id>
             <properties>
                 <activatedProperties>dev</activatedProperties>
-                <start-class>midianet.journey.Application</start-class>
+                <!--<start-class>midianet.journey.Application</start-class>-->
                 <app-name>journey-adm</app-name>
-                <app-context>/journey-adm</app-context>
-                <app-package>jar</app-package>
-                <app-datasource-url>jdbc:postgresql://10.6.60.205:5432/journey</app-datasource-url>
+                <!--<app-context>/journey-adm</app-context>-->
+                <!--<app-package>jar</app-package>-->
+                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
             </properties>

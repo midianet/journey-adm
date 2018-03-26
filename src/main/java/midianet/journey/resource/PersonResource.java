@@ -1,11 +1,14 @@
 package midianet.journey.resource;
 
+import midianet.journey.domain.Datatable;
 import midianet.journey.domain.Person;
 import midianet.journey.repository.PersonRepository;
 import midianet.journey.service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -71,45 +74,45 @@ public class PersonResource {
 
     @GetMapping(path = "/paginate")
     @ResponseStatus(HttpStatus.OK)
-    public Object paginate(@RequestParam("draw")                      Long    draw,
-                           @RequestParam("start")                     Long    start,
-                           @RequestParam("length")                    Integer length,
-                           @RequestParam("search[value]")             String  searchValue,
-                           @RequestParam("columns[0][search][value]") String  id,
-                           @RequestParam("columns[1][search][value]") String  name,
-                           @RequestParam("order[0][column]")          Integer order,
-                           @RequestParam("order[0][dir]")             String  orderDir){
-        String[] columns = new String[]{"id", "name"};
+    public Datatable paginate(@RequestParam("draw")                      Long    draw,
+                              @RequestParam("start")                     Long    start,
+                              @RequestParam("length")                    Integer length,
+                              @RequestParam("search[value]")             String  searchValue,
+                              @RequestParam("columns[0][search][value]") String  id,
+                              @RequestParam("columns[1][search][value]") String  name,
+                              @RequestParam("columns[2][search][value]") String  sex,
+                              @RequestParam("columns[3][search][value]") String  state,
+                              @RequestParam("order[0][column]")          Integer order,
+                              @RequestParam("order[0][dir]")             String  orderDir){
+        String[] columns = new String[]{"id", "name", "sex", "state"};
         List<Map<String, Object>> data = new ArrayList<>();
-//        final DataTableResponse dt = new DataTableResponse();
+        Datatable dt = new Datatable();
         Long myId = id.isEmpty() ? null : Long.parseLong(id);
-//        dt.setDraw(draw);
-//        try {
+        dt.setDraw(draw);
+        try {
             Long qtTotal = repository.count();
-            Map<String, String> searchParams = new HashMap<>();
-            if (!searchValue.isEmpty()) {
-                searchParams.put(columns[1], searchValue);
+            Integer page      = new Double(Math.ceil(start / length)).intValue();
+            PageRequest pr    = PageRequest.of(page,length,Sort.by(Sort.Direction.fromString(orderDir),columns[order]));
+            Page<Person> list = !id.isEmpty() || !name.isEmpty() ? repository.findAll(Person.filter(myId,name),pr) : repository.findAll(pr);
+            Long qtFilter     = list.getTotalElements();
+            if (qtFilter > 0) {
+                list.forEach(e  -> {
+                    HashMap<String,Object> l = new HashMap<>();
+                    l.put("state",e.getState().getDescription());
+                    l.put("sex"  ,e.getSex().getDescription());
+                    l.put("name" ,e.getName());
+                    l.put("DT_RowId","row_" + e.getId());
+                    l.put("id"   ,e.getId());
+                    data.add(l);});
             }
-            Integer page          = new Double(Math.ceil(start / length)).intValue();
-//            final PageRequest pr        = new PageRequest(page,length, new Sort(new Sort.Order(Sort.Direction.fromString(orderDir),columns[order])));
-//            final Page<Person> list     = !id.isEmpty() || name.isEmpty()  ? repository.findAll(Person.filter(myId,name),pr) : repository.findAll(pr);
-//            final Long qtFilter         = list.getTotalElements();
-//            if (qtFilter > 0) {
-//                list.forEach(e  -> {
-//                    final HashMap<String,Object> l = new HashMap<>();
-//                    l.put("name",e.getName());
-//                    l.put("DT_RowId","row_" + e.getId());
-//                    l.put("id",e.getId());
-//                    data.add(l);});
-//            }
-//            dt.setRecordsFiltered(qtFilter);
-//            dt.setData(data);
-//            dt.setRecordsTotal(qtTotal);
-//        } catch (Exception e) {
-//            log.error(e.getMessage(),e);
-//            dt.setError("Datatable error "+ e.getMessage());
-//        }
-        return null;
+            dt.setRecordsFiltered(qtFilter);
+            dt.setData(data);
+            dt.setRecordsTotal(qtTotal);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            dt.setError("Datatable error "+ e.getMessage());
+        }
+        return dt;
     }
 
 }

@@ -1,9 +1,11 @@
-package midianet.journey.domain;
+package midianet.journey.domain.converter;
+
+import midianet.journey.domain.Person;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
-@Converter
+@Converter(autoApply = true)
 public class SexConverter implements AttributeConverter<Person.Sex, String> {
 	
 	@Override

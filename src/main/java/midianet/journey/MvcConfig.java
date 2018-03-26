@@ -9,11 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class MvcConfig implements WebMvcConfigurer {
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/**").setViewName("index");
-        //registry.addViewController("/login").setViewName("login");
-        //registry.addViewController("/logout").setViewName("login");
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/**").setViewName("index");
+//        registry.addViewController("/login").setViewName("login");
+//        registry.addViewController("/logout").setViewName("login");
 //        registry.addViewController("/resposta-tipo").setViewName("index");
 //        registry.addViewController("/resposta-tipo-form/**").setViewName("index");
 //        registry.addViewController("/resposta").setViewName("index");
@@ -22,7 +22,7 @@ public class MvcConfig implements WebMvcConfigurer {
 //        registry.addViewController("/pergunta-form/**").setViewName("index");
 //        registry.addViewController("/parametro").setViewName("index");
 //        registry.addViewController("/parametro-form/**").setViewName("index");
-    }
+//    }
 
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {"classpath:/static/"};
 

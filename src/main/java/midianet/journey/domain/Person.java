@@ -1,11 +1,20 @@
 package midianet.journey.domain;
 
 import lombok.*;
+import midianet.journey.domain.converter.ContractConverter;
+import midianet.journey.domain.converter.SexConverter;
+import midianet.journey.domain.converter.StateConverter;
+import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
+import javax.persistence.criteria.Predicate;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Data
 @Entity
@@ -23,36 +32,36 @@ public class Person {
     @Column(nullable = false)
     private Long telegram;
     
-    private String    name;
-    private String    nickname;
-    private String    phone;
-    private String    birthday;
-    private String    cpf;
-    private String    rg;
-    private String    rgexped;
+    private String name;
+    private String nickname;
+    private String phone;
+    private String cpf;
+    private String rg;
     private LocalDate register;
-    private Integer   assent;
+    private Integer assent;
     
-    @Enumerated
+    @Column(name = "rg_exped")
+    private String rgexped;
+    
+    @Past
+    private LocalDate birthday;
+    
     @Convert(converter = SexConverter.class)
-    private Sex       sex;
+    private Sex sex;
 
-    @Enumerated
     @Convert(converter = ContractConverter.class)
-    private Contract  agreed;
-    
-    @Enumerated
+    private Contract agreed;
+
     @Convert(converter = StateConverter.class)
-    private State     state;
-
+    private State state;
+    
     //private Bedroom   bedroom;
-
+    
     @Getter
     @AllArgsConstructor
     public enum Sex {
         MALE  ("M","Masculino"),
         FEMALE("F","Feminino");
-        
         private String value;
         private String description;
         
@@ -92,8 +101,8 @@ public class Person {
     @Getter
     @AllArgsConstructor
     public enum Contract{
-        BLANK("","Não Assinado"),
-        AGREE("A","Aceito"),
+        BLANK  ("" ,"Não Assinado"),
+        AGREE  ("A","Aceito"),
         DISAGRE("D","Não Aceito");
         private String value;
         private String description;
@@ -108,6 +117,14 @@ public class Person {
         }
         
     }
-    
-    
+	
+	public static Specification<Person> filter(final Long id, final String name) {
+		return (root, criteriaQuery, criteriaBuilder) -> {
+			final List<Predicate> predicates = new ArrayList<>();
+			Optional.ofNullable(id).ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get("id"), l)));
+			Optional.ofNullable(name).ifPresent(s -> predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + s.toLowerCase() + "%")));
+			return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
+		};
+	}
+	
 }

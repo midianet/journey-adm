@@ -1,8 +1,8 @@
 <div class="dataTable_wrapper">
-    <legend class="section" style="font-weight: 600;"> Edição de Pergunta</legend>
+    <legend class="section" style="font-weight: 600;"> Edição de Pessoa</legend>
     <div style="float: right;">
         <button class="btn btn-success" ng-disabled="enableSave()" ng-click="save()"  >Salvar <i class="fa fa-plus"></i></button>
-        <a href="#/pergunta" class=" btn btn-primary" >Voltar <i class="fa fa-reply"></i></a>
+        <a href="#/pessoas" class=" btn btn-primary" >Voltar <i class="fa fa-reply"></i></a>
     </div>
     <div class="row" style="padding-top:3em;">
         <legend class="section" style="font-weight: 600;"></legend>
@@ -10,9 +10,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-5 form-group">
-                        <label for="text">Texto</label>
-                        <input type="text" class="form-control" id="text" name="method" ng-model="question.text" maxlength="50" placeholder="Informe o texto." autofocus required />
-                        <span  style="color: #a94442;" ng-show="frm.text.$error.required && frm.text.$dirty">Campo Obrigatório</span>
+                        <label for="name">Nome</label>
+                        <input type="text" class="form-control" id="name" name="name" ng-model="person.name" maxlength="50" placeholder="Informe o nome." autofocus required />
+                        <span  style="color: #a94442;" ng-show="frm.name.$error.required && frm.name.$dirty">Campo Obrigatório</span>
                     </div>
                     <div class="col-md-5 form-group">
                         <label for="type">Modo de Identificação</label>
