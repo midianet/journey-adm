@@ -1,5 +1,7 @@
 package midianet.journey.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 import midianet.journey.domain.converter.ContractConverter;
 import midianet.journey.domain.converter.SexConverter;
@@ -27,32 +29,60 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+//    @NotNull
+//    @NotEmpty
+//    @Column(nullable = false)
+    private Long telegram;
+
     @NotNull
     @NotEmpty
-    @Column(nullable = false)
-    private Long telegram;
-    
+    @Column(nullable = false, length = 80)
     private String name;
+
+    @NotNull
+    @NotEmpty
+    @Column(nullable = false, length = 40)
     private String nickname;
+
+    @Column(length = 20)
     private String phone;
+
+    @Column(length = 11)
     private String cpf;
+
+    @Column(length = 10)
     private String rg;
-    private LocalDate register;
-    private Integer assent;
-    
-    @Column(name = "rg_exped")
+
+    @Column(name = "rg_exped", length = 15)
     private String rgexped;
-    
-    @Past
+
+//    @NotNull
+//    @Column(nullable = false)
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private LocalDate register;
+
+    private Integer assent;
+
+    //@Past
+    @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate birthday;
-    
+
+    @NotNull
     @Convert(converter = SexConverter.class)
+    @Column(nullable = false,length = 1)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Sex sex;
 
+    @NotNull
+    @Column(length = 1,nullable = false)
     @Convert(converter = ContractConverter.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Contract agreed;
 
+    @NotNull
+    @Column(length = 1,nullable = false)
     @Convert(converter = StateConverter.class)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private State state;
     
     //private Bedroom   bedroom;
@@ -62,6 +92,8 @@ public class Person {
     public enum Sex {
         MALE  ("M","Masculino"),
         FEMALE("F","Feminino");
+
+        @JsonValue
         private String value;
         private String description;
         
@@ -84,6 +116,8 @@ public class Person {
         ASSOCIATE (2,"Associado"),
         REGISTERED(3,"Registrado"),
         CONFIRMED (4,"Confirmado");
+
+        @JsonValue
         private Integer value;
         private String  description;
         
@@ -101,9 +135,11 @@ public class Person {
     @Getter
     @AllArgsConstructor
     public enum Contract{
-        BLANK  ("" ,"Não Assinado"),
+        BLANK  ("N" ,"Não Assinado"),
         AGREE  ("A","Aceito"),
         DISAGRE("D","Não Aceito");
+
+        @JsonValue
         private String value;
         private String description;
         

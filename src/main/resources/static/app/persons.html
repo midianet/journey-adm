@@ -1,9 +1,9 @@
 <div class="dataTable_wrapper">
     <legend class="section" style="font-weight: 600;"> Pessoas</legend>
     <div style="float: right">
-        <a href="#/pessoa" class="btn btn-primary">Novo <i class="fa fa-plus"></i></a>
+        <a href="#/pessoas/new" class="btn btn-primary">Novo <i class="fa fa-plus"></i></a>
     </div>
-    <table go-data-table edit-url="#/pessoa" ajax="/api/persons/paginate" id="dt-list" class="display table table-hover" cellspacing="0" width="100%">
+    <table go-data-table edit-url="#/pessoas" ajax="../api/persons/paginate" id="dt-list" class="display table table-hover" cellspacing="0" width="100%">
         <thead>
         <tr class="tr-cabecalho">
             <th go-data-table-item name ="id">Código</th>

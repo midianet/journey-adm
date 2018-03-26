@@ -10,7 +10,7 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: 'persons.html',
             controller:  'PersonController'
         })
-        .when('/pessoa', {
+        .when('/pessoas/:id', {
             templateUrl: 'person.html',
             controller:  'PersonController'
         })
