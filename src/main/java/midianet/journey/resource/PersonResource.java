@@ -88,12 +88,14 @@ public class PersonResource {
         List<Map<String, Object>> data = new ArrayList<>();
         Datatable dt = new Datatable();
         Long myId = id.isEmpty() ? null : Long.parseLong(id);
+        String mySex = sex.isEmpty() ? null : sex;
+        Integer myState = state.isEmpty() ? null : Integer.parseInt(state);
         dt.setDraw(draw);
         try {
             Long qtTotal = repository.count();
             Integer page      = new Double(Math.ceil(start / length)).intValue();
             PageRequest pr    = PageRequest.of(page,length,Sort.by(Sort.Direction.fromString(orderDir),columns[order]));
-            Page<Person> list = !id.isEmpty() || !name.isEmpty() ? repository.findAll(Person.filter(myId,name),pr) : repository.findAll(pr);
+            Page<Person> list = !id.isEmpty() || !name.isEmpty() || !sex.isEmpty() || !state.isEmpty() ? repository.findAll(Person.filter(myId,name,mySex,myState),pr) : repository.findAll(pr);
             Long qtFilter     = list.getTotalElements();
             if (qtFilter > 0) {
                 list.forEach(e  -> {

@@ -16,8 +16,23 @@
         <tr class="tr-filtros">
             <th style="width: 8%;"><input id="id-search"    restrict-to="[0-9]" type="text" placeholder="Código"/></th>
             <th style="width: 52%;"><input id="name-search"  type="text" style="width: 100%;" placeholder="Nome"/></th>
-            <th style="width: 15%;"><input id="sex-search"   type="text" style="width: 100%;" placeholder="Sexo" disabled/></th>
-            <th style="width: 15%;"><input id="state-search" type="text" style="width: 100%;" placeholder="Situação" disabled/></th>
+            <th style="width: 15%;">
+                <select id="sex-search" data-placeholder="Selecione o Sexo" class="form-control">
+                    <option value="">Selecione</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                </select>
+            </th>
+            <th style="width: 15%;">
+                <select id="state-search" class="form-control" placeholder="Selecione a Situação.">
+                    <option value="">Selecione</option>
+                    <option value="0">Candidato</option>
+                    <option value="1">Selecionado</option>
+                    <option value="2">Associado</option>
+                    <option value="3">Registrado</option>
+                    <option value="4">Confirmado</option>
+                </select>
+            </th>
             <th style="width: 10%;">Editar</th>
             <th style="width: 10%;">Remover</th>
         </tr>

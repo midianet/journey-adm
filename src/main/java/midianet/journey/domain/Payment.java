@@ -9,6 +9,7 @@ import midianet.journey.domain.converter.StateConverter;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,8 +51,10 @@ public class Payment {
 	public static Specification<Payment> filter(final Long id, final Person person, final LocalDate date , final BigDecimal amount) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicates = new ArrayList<>();
-			Optional.ofNullable(id).ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get("id"), l)));
-			Optional.ofNullable(name).ifPresent(s -> predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + s.toLowerCase() + "%")));
+			Optional.ofNullable(id)    .ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get      ("id"), l)));
+			Optional.ofNullable(person).ifPresent(p -> predicates.add(criteriaBuilder.equal(root.<Long>get      ("person").get("id"), p.getId())));
+            Optional.ofNullable(date)  .ifPresent(d -> predicates.add(criteriaBuilder.equal(root.<Date>get      ("date"),d)));
+            Optional.ofNullable(amount).ifPresent(a -> predicates.add(criteriaBuilder.equal(root.<BigDecimal>get("amount"),a)));
 			return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
 		};
 	}

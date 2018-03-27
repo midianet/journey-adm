@@ -16,7 +16,9 @@
         <tr class="tr-filtros">
             <th style="width: 8%;"><input id="id-search"    restrict-to="[0-9]" type="text" placeholder="Código"/></th>
             <th style="width: 52%;"><input id="person-search"  type="text" style="width: 100%;" placeholder="Pessoa"/></th>
-            <th style="width: 15%;"><input id="date-search"   type="text" style="width: 100%;" placeholder="Data" disabled/></th>
+            <th style="width: 15%;">
+                <input type="text" class="form-control" id="date-search" name="date-search"/>
+            </th>
             <th style="width: 15%;"><input id="amount-search" type="text" style="width: 100%;" placeholder="Valor" disabled/></th>
             <th style="width: 10%;">Editar</th>
             <th style="width: 10%;">Remover</th>
@@ -24,3 +26,11 @@
         </thead>
     </table>
 </div>
+<script>
+    $('#date-search').datepicker({
+        format: 'dd-mm-yyyy',
+        locale: 'pt-br',
+        startDate:'01-03-2018',
+        endDate:'1d'
+    });
+</script>

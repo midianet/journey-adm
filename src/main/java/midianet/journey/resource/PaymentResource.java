@@ -75,47 +75,48 @@ public class PaymentResource {
         service.delete(e.getId());
     }
 
-//    @GetMapping(path = "/paginate")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Datatable paginate(@RequestParam("draw")                      Long    draw,
-//                              @RequestParam("start")                     Long    start,
-//                              @RequestParam("length")                    Integer length,
-//                              @RequestParam("search[value]")             String  searchValue,
-//                              @RequestParam("columns[0][search][value]") String  id,
-//                              @RequestParam("columns[1][search][value]") String  name,
-//                              @RequestParam("columns[2][search][value]") String  sex,
-//                              @RequestParam("columns[3][search][value]") String  state,
-//                              @RequestParam("order[0][column]")          Integer order,
-//                              @RequestParam("order[0][dir]")             String  orderDir){
-//        String[] columns = new String[]{"id", "name", "sex", "state"};
-//        List<Map<String, Object>> data = new ArrayList<>();
-//        Datatable dt = new Datatable();
-//        Long myId = id.isEmpty() ? null : Long.parseLong(id);
-//        dt.setDraw(draw);
-//        try {
-//            Long qtTotal = repository.count();
-//            Integer page      = new Double(Math.ceil(start / length)).intValue();
-//            PageRequest pr    = PageRequest.of(page,length,Sort.by(Sort.Direction.fromString(orderDir),columns[order]));
-//            Page<Person> list = !id.isEmpty() || !name.isEmpty() ? repository.findAll(Person.filter(myId,name),pr) : repository.findAll(pr);
-//            Long qtFilter     = list.getTotalElements();
-//            if (qtFilter > 0) {
-//                list.forEach(e  -> {
-//                    HashMap<String,Object> l = new HashMap<>();
-//                    l.put("state",e.getState().getDescription());
-//                    l.put("sex"  ,e.getSex().getDescription());
-//                    l.put("name" ,e.getName());
-//                    l.put("DT_RowId","row_" + e.getId());
-//                    l.put("id"   ,e.getId());
-//                    data.add(l);});
-//            }
-//            dt.setRecordsFiltered(qtFilter);
-//            dt.setData(data);
-//            dt.setRecordsTotal(qtTotal);
-//        } catch (Exception e) {
-//            log.error(e.getMessage(),e);
-//            dt.setError("Datatable error "+ e.getMessage());
-//        }
-//        return dt;
-//    }
+    @GetMapping(path = "/paginate")
+    @ResponseStatus(HttpStatus.OK)
+    public Datatable paginate(@RequestParam("draw")                      Long    draw,
+                              @RequestParam("start")                     Long    start,
+                              @RequestParam("length")                    Integer length,
+                              @RequestParam("search[value]")             String  searchValue,
+                              @RequestParam("columns[0][search][value]") String  id,
+                              @RequestParam("columns[1][search][value]") String  person,
+                              @RequestParam("columns[2][search][value]") String  date,
+                              @RequestParam("columns[3][search][value]") String  amount,
+                              @RequestParam("order[0][column]")          Integer order,
+                              @RequestParam("order[0][dir]")             String  orderDir){
+        String[] columns = new String[]{"id", "person", "date", "amount"};
+        List<Map<String, Object>> data = new ArrayList<>();
+        Datatable dt = new Datatable();
+        Long myId = id.isEmpty() ? null : Long.parseLong(id);
+        //Person person = person.is
+        dt.setDraw(draw);
+        try {
+            Long qtTotal = repository.count();
+            Integer page      = new Double(Math.ceil(start / length)).intValue();
+            PageRequest pr    = PageRequest.of(page,length,Sort.by(Sort.Direction.fromString(orderDir),columns[order]));
+            Page<Payment> list = repository.findAll(pr); //!id.isEmpty() || !name.isEmpty() ? repository.findAll(Person.filter(myId,name),pr) : repository.findAll(pr);
+            Long qtFilter     = list.getTotalElements();
+            if (qtFilter > 0) {
+                list.forEach(e  -> {
+                    HashMap<String  ,Object> l = new HashMap<>();
+                    l.put("person"  ,e.getPerson().getName());
+                    l.put("date"    ,e.getDate());
+                    l.put("amount"  ,e.getAmount());
+                    l.put("DT_RowId","row_" + e.getId());
+                    l.put("id"      ,e.getId());
+                    data.add(l);});
+            }
+            dt.setRecordsFiltered(qtFilter);
+            dt.setData(data);
+            dt.setRecordsTotal(qtTotal);
+        } catch (Exception e) {
+            log.error(e.getMessage(),e);
+            dt.setError("Datatable error "+ e.getMessage());
+        }
+        return dt;
+    }
 
 }

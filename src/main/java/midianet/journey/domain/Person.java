@@ -154,11 +154,13 @@ public class Person {
         
     }
 	
-	public static Specification<Person> filter(final Long id, final String name) {
+	public static Specification<Person> filter(final Long id, final String name, final String sex, final Integer state) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicates = new ArrayList<>();
-			Optional.ofNullable(id).ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get("id"), l)));
-			Optional.ofNullable(name).ifPresent(s -> predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + s.toLowerCase() + "%")));
+			Optional.ofNullable(id)   .ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get("id"), l)));
+			Optional.ofNullable(name) .ifPresent(n -> predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + n.toLowerCase() + "%")));
+            Optional.ofNullable(sex)  .ifPresent(s -> predicates.add(criteriaBuilder.equal(root.<Person.Sex>get("sex"), Person.Sex.toEnum(s))));
+            Optional.ofNullable(state).ifPresent(s -> predicates.add(criteriaBuilder.equal(root.<Person.State>get("state"),Person.State.toEnum(s))));
 			return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
 		};
 	}
