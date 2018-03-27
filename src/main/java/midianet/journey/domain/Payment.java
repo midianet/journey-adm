@@ -46,13 +46,13 @@ public class Payment {
     @ManyToOne
     private Person person;
 	
-//	public static Specification<Payment> filter(final Long id, final String name) {
-//		return (root, criteriaQuery, criteriaBuilder) -> {
-//			final List<Predicate> predicates = new ArrayList<>();
-//			Optional.ofNullable(id).ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get("id"), l)));
-//			Optional.ofNullable(name).ifPresent(s -> predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + s.toLowerCase() + "%")));
-//			return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
-//		};
-//	}
+	public static Specification<Payment> filter(final Long id, final Person person, final LocalDate date , final BigDecimal amount) {
+		return (root, criteriaQuery, criteriaBuilder) -> {
+			final List<Predicate> predicates = new ArrayList<>();
+			Optional.ofNullable(id).ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get("id"), l)));
+			Optional.ofNullable(name).ifPresent(s -> predicates.add(criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), "%" + s.toLowerCase() + "%")));
+			return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
+		};
+	}
 	
 }

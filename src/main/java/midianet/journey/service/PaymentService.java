@@ -1,7 +1,7 @@
 package midianet.journey.service;
 
-import midianet.journey.domain.Person;
-import midianet.journey.repository.PersonRepository;
+import midianet.journey.domain.Payment;
+import midianet.journey.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class PersonService {
+public class PaymentService {
 
     @Autowired
-    private PersonRepository repository;
+    private PaymentRepository repository;
 
     @Transactional
-    public Person save(Person person){
-        return repository.save(person);
+    public Payment save(Payment payment){
+        return repository.save(payment);
     }
 
     @Transactional(rollbackOn = {DataIntegrityViolationException.class, Exception.class})

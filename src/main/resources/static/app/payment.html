@@ -1,0 +1,111 @@
+<div class="dataTable_wrapper">
+    <legend class="section" style="font-weight: 600;"> Edição de Pagamentos</legend>
+    <div style="float: right;">
+        <button class="btn btn-success" ng-disabled="frm.$invalid" ng-click="save()"  >Salvar <i class="fa fa-plus"></i></button>
+        <a href="#/pagamentos" class=" btn btn-primary" >Voltar <i class="fa fa-reply"></i></a>
+    </div>
+    <div class="row" style="padding-top:3em;">
+        <legend class="section" style="font-weight: 600;"></legend>
+        <form novalidate action="" name="frm" id="frm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="name">Nome</label>
+                        <input type="text" class="form-control" id="name" name="name" ng-model="person.name" maxlength="80" placeholder="Informe o nome." autofocus required />
+                        <span  style="color: #a94442;" ng-show="frm.name.$error.required && frm.name.$dirty">Campo Obrigatório</span>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="nickname">Apelido</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname" ng-model="person.nickname" maxlength="40" placeholder="Informe o apelido." required />
+                        <span  style="color: #a94442;" ng-show="frm.nickname.$error.required && frm.nickname.$dirty">Campo Obrigatório</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label for="register">Data Cadastro</label>
+                        <input type="text" class="form-control" id="register" name="register" ng-model="person.register"/>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="name">Telegram</label>
+                        <input type="text" class="form-control" id="telegram" name="telegram" ng-model="person.telegram"/>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="phone">Telefone</label>
+                        <input type="text" class="form-control" id="phone" name="phone" ng-model="person.phone" maxlength="20" placeholder="Informe o telefone."/>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="sex">Sexo</label>
+                        <select id="sex" ng-model="person.sex" data-placeholder="Selecione o Sexo" class="form-control" required >
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                        <span  style="color: #a94442;" ng-show="frm.sex.$error.required && frm.sex.$dirty">Campo Obrigatório</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label for="birthday">Data Nascimento</label>
+                        <input type="text" class="form-control" id="birthday" name="birthday" ng-model="person.birthday" maxlength="10" placeholder="Informe a data de nascimento."/>
+                        <span  style="color: #a94442;" ng-show="frm.date.$error.required && frm.date.$dirty">Campo Obrigatório</span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="cpf">Cpf</label>
+                        <input type="text" class="form-control" id="cpf" name="cpf" ng-model="person.cpf" maxlength="14"  placeholder="Informe o CPF."/>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="rg">RG</label>
+                        <input type="text" class="form-control" id="rg" name="rg" ng-model="person.rg" maxlength="20" placeholder="Informe o RG."/>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="rgexped">Expedidor RG</label>
+                        <input type="text" class="form-control" id="rgexped" name="rgexped" ng-model="person.rgexped" placeholder="Informe o expedidor do RG."/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 form-group">
+                        <label for="seat">Poltrona</label>
+                        <input type="text" class="form-control" id="seat" name="seat" ng-model="person.seat" maxlength="2"  placeholder="Informe a poltrona."/>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="agreed">Contrato</label>
+                        <select id="agreed" ng-model="person.agreed" class="form-control" placeholder="Selecione a situação do contrato." required>
+                            <option value="N">Não assinado</option>
+                            <option value="A">Aceito</option>
+                            <option value="D">Não Aceito</option>
+                        </select>
+                        <span  style="color: #a94442;" ng-show="frm.agreed.$error.required && frm.agreed.$dirty">Campo Obrigatório</span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="state">Situação</label>
+                        <select id="state" ng-model="person.state" class="form-control" placeholder="Selecione a Situação." required>
+                            <option value="0">Candidato</option>
+                            <option value="1">Selecionado</option>
+                            <option value="2">Associado</option>
+                            <option value="3">Registrado</option>
+                            <option value="4">Confirmado</option>
+                        </select>
+                        <span  style="color: #a94442;" ng-show="frm.state.$error.required && frm.state.$dirty">Campo Obrigatório</span>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <label for="bedroom">Quarto</label>
+                        <input type="text" class="form-control" id="bedroom" name="bedroom" ng-model="person.bedroom" placeholder="Selecione o Quarto."/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $('#register').datepicker({
+        format: 'dd-mm-yyyy',
+        locale: 'pt-br',
+        startDate:'01-01-1960',
+        endDate:'0d'
+    });
+    $('#birthday').datepicker({
+        format: 'dd-mm-yyyy',
+        locale: 'pt-br',
+        startDate:'01-01-1960',
+        endDate:'-18y'
+    });
+</script>

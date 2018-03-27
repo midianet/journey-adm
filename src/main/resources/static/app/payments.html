@@ -1,0 +1,26 @@
+<div class="dataTable_wrapper">
+    <legend class="section" style="font-weight: 600;"> Pagamentos</legend>
+    <div style="float: right">
+        <a href="#/payments/new" class="btn btn-primary">Novo <i class="fa fa-plus"></i></a>
+    </div>
+    <table go-data-table edit-url="#/pessoas" ajax="../api/payments/paginate" id="dt-list" class="display table table-hover" cellspacing="0" width="100%">
+        <thead>
+        <tr class="tr-cabecalho">
+            <th go-data-table-item name ="id">Código</th>
+            <th go-data-table-item name ="person">Pessoa</th>
+            <th go-data-table-item name ="date">Data</th>
+            <th go-data-table-item name ="amount">Valor</th>
+            <th style="width: 5%"></th>
+            <th style="width: 5%"></th>
+        </tr>
+        <tr class="tr-filtros">
+            <th style="width: 8%;"><input id="id-search"    restrict-to="[0-9]" type="text" placeholder="Código"/></th>
+            <th style="width: 52%;"><input id="person-search"  type="text" style="width: 100%;" placeholder="Pessoa"/></th>
+            <th style="width: 15%;"><input id="date-search"   type="text" style="width: 100%;" placeholder="Data" disabled/></th>
+            <th style="width: 15%;"><input id="amount-search" type="text" style="width: 100%;" placeholder="Valor" disabled/></th>
+            <th style="width: 10%;">Editar</th>
+            <th style="width: 10%;">Remover</th>
+        </tr>
+        </thead>
+    </table>
+</div>
