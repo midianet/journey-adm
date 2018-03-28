@@ -1,4 +1,4 @@
-var app = angular.module('App', ['ngRoute','goDataTable']);
+var app = angular.module('App', ['ngRoute','goDataTable','ui.utils.masks']);
 
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider

@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,13 +94,13 @@ public class PaymentResource {
         Datatable dt = new Datatable();
         Long myId = id.isEmpty() ? null : Long.parseLong(id);
         Long myPerson = person.isEmpty() ? null: Long.parseLong(person);
-        //Person person = person.is
+        LocalDate myDate = date.length() != 10 ? null : LocalDate.parse(date,DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         dt.setDraw(draw);
         try {
             Long qtTotal = repository.count();
             Integer page      = new Double(Math.ceil(start / length)).intValue();
             PageRequest pr    = PageRequest.of(page,length,Sort.by(Sort.Direction.fromString(orderDir),columns[order]));
-            Page<Payment> list = !id.isEmpty() || !person.isEmpty() || !date.isEmpty() || !amount.isEmpty() ? repository.findAll(Payment.filter(myId,myPerson),pr) : repository.findAll(pr);
+            Page<Payment> list = !id.isEmpty() || !person.isEmpty() || !date.isEmpty() || !amount.isEmpty() ? repository.findAll(Payment.filter(myId,myPerson, myDate),pr) : repository.findAll(pr);
             Long qtFilter     = list.getTotalElements();
             if (qtFilter > 0) {
                 list.forEach(e  -> {
