@@ -54,6 +54,22 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
                             });
                     });
             }
+        }else{
+            $http({method: 'GET', url: '../api/persons/'})
+                .then(function (response){
+                    $scope.persons =  response.data;
+                    $("#person-search").each(function() {
+                        $(this).select2({allowClear: true,
+                                         placeholder: "Pessoa"},
+                                        {data: $(this).data()});
+                    });
+                } , function (response){
+                    console.log(response.data);
+                    console.log(response.status);
+                    $.notify({message : response.data.message},
+                        {type  : 'danger',
+                         offset: {x: 10, y: 59}});
+                });
         }
     }
 ]);

@@ -15,7 +15,12 @@
         </tr>
         <tr class="tr-filtros">
             <th style="width: 8%;"><input id="id-search"    restrict-to="[0-9]" type="text" placeholder="Código"/></th>
-            <th style="width: 52%;"><input id="person-search"  type="text" style="width: 100%;" placeholder="Pessoa"/></th>
+            <th style="width: 52%;">
+                <select id="person-search" class="form-control" placeholder="Selecione a Pessoa.">
+                    <option value="">Filtrar por Pessoa</option>
+                    <option ng-repeat="p in persons"  value="{{p.id}}">{{p.name}}</option>
+                </select>
+            </th>
             <th style="width: 15%;">
                 <input type="text" class="form-control" id="date-search" name="date-search"/>
             </th>

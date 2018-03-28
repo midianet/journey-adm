@@ -1,6 +1,7 @@
 app.controller('PersonController', ['$scope','$http','$location','$routeParams',
                function ($scope,$http,$location,$routeParams) {
         $scope.person = {};
+        $scope.persons = [];
 
         $scope.save = function (){
             var method =  $scope.person.id ? 'PUT' : 'POST';

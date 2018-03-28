@@ -36,7 +36,7 @@ public class PersonResource {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Person> list(){
-        return repository.findAll(new Sort(Sort.Direction.ASC, "description"));
+        return repository.findAll(new Sort(Sort.Direction.ASC, "name"));
     }
 
     @GetMapping(path = "/{id}")
