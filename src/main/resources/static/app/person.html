@@ -23,15 +23,15 @@
                 <div class="row">
                     <div class="col-md-3 form-group">
                         <label for="register">Data Cadastro</label>
-                        <input type="text" class="form-control" id="register" name="register" ng-model="person.register"/>
+                        <input type="text" class="form-control" id="register" maxlength="10" name="register" ng-model="person.register"/>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="name">Telegram</label>
-                        <input type="text" class="form-control" id="telegram" name="telegram" ng-model="person.telegram"/>
+                        <input type="text" class="form-control" id="telegram" name="telegram" maxlength="13" restrict-to="[0-9]"  ng-model="person.telegram"/>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="phone">Telefone</label>
-                        <input type="text" class="form-control" id="phone" name="phone" ng-model="person.phone" maxlength="20" placeholder="Informe o telefone."/>
+                        <input type="text" class="form-control" id="phone" name="phone" ng-model="person.phone"  restrict-to="[0-9]"  maxlength="20" placeholder="Informe o telefone." ui-br-phone-number-mask/>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="sex">Sexo</label>
@@ -50,21 +50,21 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="cpf">Cpf</label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" ng-model="person.cpf" maxlength="14"  placeholder="Informe o CPF."/>
+                        <input type="text" class="form-control" id="cpf" name="cpf" ng-model="person.cpf" maxlength="14"   restrict-to="[0-9]"  placeholder="Informe o CPF." ui-br-cpf-mask />
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="rg">RG</label>
-                        <input type="text" class="form-control" id="rg" name="rg" ng-model="person.rg" maxlength="20" placeholder="Informe o RG."/>
+                        <input type="text" class="form-control" id="rg" name="rg" ng-model="person.rg" maxlength="20"  restrict-to="[0-9]"  placeholder="Informe o RG."/>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="rgexped">Expedidor RG</label>
-                        <input type="text" class="form-control" id="rgexped" name="rgexped" ng-model="person.rgexped" placeholder="Informe o expedidor do RG."/>
+                        <input type="text" class="form-control" id="rgexped" name="rgexped" ng-model="person.rgexped"  maxlength="15" placeholder="Informe o expedidor do RG."/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 form-group">
                         <label for="seat">Poltrona</label>
-                        <input type="text" class="form-control" id="seat" name="seat" ng-model="person.seat" maxlength="2"  placeholder="Informe a poltrona."/>
+                        <input type="text" class="form-control" id="seat" name="seat" ng-model="person.seat" maxlength="2"  restrict-to="[0-9]"  placeholder="Informe a poltrona."/>
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="agreed">Contrato</label>
@@ -88,7 +88,10 @@
                     </div>
                     <div class="col-md-3 form-group">
                         <label for="bedroom">Quarto</label>
-                        <input type="text" class="form-control" id="bedroom" name="bedroom" ng-model="person.bedroom" placeholder="Selecione o Quarto."/>
+                        <select id="bedroom" class="form-control" ng-model="person.bedroom.id" placeholder="Selecione o Quarto.">
+                            <option value="">Filtrar por Quarto</option>
+                            <option ng-repeat="b in bedroons"  value="{{b.id}}">{{b.description}}</option>
+                        </select>
                     </div>
                 </div>
             </div>

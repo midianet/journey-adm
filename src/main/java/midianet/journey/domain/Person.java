@@ -29,9 +29,8 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-//    @NotNull
-//    @NotEmpty
-//    @Column(nullable = false)
+    @NotNull
+    @Column(nullable = false)
     private Long telegram;
 
     @NotNull
@@ -56,14 +55,14 @@ public class Person {
     @Column(name = "rg_exped", length = 15)
     private String rgexped;
 
-//    @NotNull
-//    @Column(nullable = false)
+    @NotNull
+    @Column(nullable = false)
     @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate register;
 
     private Integer assent;
 
-    //@Past
+    @Past
     @JsonFormat(pattern="dd-MM-yyyy")
     private LocalDate birthday;
 
@@ -85,7 +84,8 @@ public class Person {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     private State state;
     
-    //private Bedroom   bedroom;
+    @ManyToOne
+    private Bedroom bedroom;
     
     @Getter
     @AllArgsConstructor

@@ -1,0 +1,40 @@
+<div class="dataTable_wrapper">
+    <legend class="section" style="font-weight: 600;"> Quartos</legend>
+    <div style="float: right">
+        <a href="#/quartos/new" class="btn btn-primary">Novo <i class="fa fa-plus"></i></a>
+    </div>
+    <table go-data-table edit-url="#/quartos" ajax="../api/bedroons/paginate" id="dt-list" class="display table table-hover" cellspacing="0" width="100%">
+        <thead>
+        <tr class="tr-cabecalho">
+            <th go-data-table-item name ="id"          width="5%">Código</th>
+            <th go-data-table-item name ="description" width="40%" >Descrição</th>
+            <th go-data-table-item name ="type"        width="15%">Tipo</th>
+            <th go-data-table-item name ="gender"      width="15%">Gênero</th>
+            <th width="3%"></th>
+            <th width="3%"></th>
+        </tr>
+        <tr class="tr-filtros">
+            <th><input id="id-search" style="width: 100%" restrict-to="[0-9]" class="form-control" type="text" maxlength="8" placeholder="Cód."/></th>
+            <th><input id="description-search" style="width: 100%" type="text" class="form-control" maxlength="30" placeholder="Descrição"/></th>
+            <th>
+                <select id="type-search" style="width: 100%" data-placeholder="Selecione o Tipo" class="form-control">
+                    <option value="">Selecione</option>
+                    <option value="D">Duplo</option>
+                    <option value="T">Triplo</option>
+                    <option value="Q">Quádruplo</option>
+                </select>
+            </th>
+            <th>
+                <select id="gender-search" style="width: 100%" class="form-control" placeholder="Selecione o Gênero.">
+                    <option value="">Selecione</option>
+                    <option value="M">Masculino</option>
+                    <option value="F">Feminino</option>
+                    <option value="U">Misto</option>
+                </select>
+            </th>
+            <th>Editar</th>
+            <th>Remover</th>
+        </tr>
+        </thead>
+    </table>
+</div>

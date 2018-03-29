@@ -8,7 +8,7 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
             var msg    =  $scope.payment.id ? 'Alterado com sucesso' : 'Criado com sucesso';
             $http({method: method, url: url  ,data:$scope.payment})
                 .then(function (){
-                    $location.path('payments');
+                    $location.path('pagamentos');
                     $.notify({message : msg},
                         {payment : 'success',
                          offset: {x: 10, y: 59}});
@@ -31,45 +31,68 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
                 } , function (response){
                     console.log(response.data);
                     console.log(response.status);
-                    $location.path('payments');
+                    $location.path('pagamentos');
                     $.notify({message : response.data.message},
                         {payment : 'danger',
                             offset: {x: 10, y: 59}});
                 });
         };
 
-        if($routeParams.id) {
-            if ($routeParams.id != 'new') {
-                $http({method: 'GET', url: '../api/payments/' + $routeParams.id})
-                    .then(function (response) {
-                        $scope.payment = response.data;
-                    }, function (response) {
-                        console.log(response.data);
-                        console.log(response.status);
-                        $location.path('payments');
-                        $.notify({message: response.data.message},
-                            {
-                                payment: 'danger',
-                                offset: {x: 10, y: 59}
-                            });
-                    });
-            }
-        }else{
+       $scope.listPersons = function (){
+           $http({method: 'GET', url: '../api/persons/'})
+               .then(function (response){
+                   $scope.persons =  response.data;
+                   $("#person-search").each(function() {
+                       $(this).select2({allowClear: true,
+                                        placeholder: "Pessoa"},
+                                        {data: $(this).data()});
+                   });
+               } , function (response){
+                   console.log(response.data);
+                   console.log(response.status);
+                   $.notify({message : response.data.message},
+                       {type  : 'danger',
+                        offset: {x: 10, y: 59}});
+               });
+       };
+
+        if($routeParams.id && $routeParams.id != 'new') {
             $http({method: 'GET', url: '../api/persons/'})
                 .then(function (response){
                     $scope.persons =  response.data;
                     $("#person-search").each(function() {
                         $(this).select2({allowClear: true,
-                                         placeholder: "Pessoa"},
-                                        {data: $(this).data()});
+                                placeholder: "Pessoa"},
+                            {data: $(this).data()});
                     });
+                    $http({method: 'GET', url:'../api/payments/' + $routeParams.id})
+                        .then(function (response){
+                            $scope.payment = response.data;
+                            setTimeout(function(){
+                                $scope.propagate = false;
+                                $("#person-search").val($scope.payment.person.id).trigger("change");
+                                $scope.propagate = true;
+                            },0);
+                        } , function (response){
+                            console.log(response.data);
+                            console.log(response.status);
+                            $location.path('pagamentos');
+                            $.notify({message : response.data.message},
+                                {type : 'danger',
+                                    offset: {x: 10, y: 59}});
+                        });
+
                 } , function (response){
                     console.log(response.data);
                     console.log(response.status);
+                    $location.path('pagamentos');
                     $.notify({message : response.data.message},
-                        {type  : 'danger',
-                         offset: {x: 10, y: 59}});
+                        {type : 'danger',
+                            offset: {x: 10, y: 59}});
                 });
+        }else{
+            $scope.listPersons();
         }
     }
+
 ]);

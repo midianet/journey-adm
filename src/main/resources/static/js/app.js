@@ -15,12 +15,20 @@ app.config(function($routeProvider, $locationProvider) {
             controller:  'PersonController'
         })
         .when('/pagamentos', {
-            templateUrl: 'payments.html',
-            controller:  'PaymentController'
-        })
+        templateUrl: 'payments.html',
+        controller:  'PaymentController'
+    })
         .when('/pagamentos/:id', {
             templateUrl: 'payment.html',
             controller: 'PaymentController'
+        })
+        .when('/quartos', {
+            templateUrl: 'bedroons.html',
+            controller : 'BedroomController'
+        })
+        .when('/quartos/:id', {
+            templateUrl: 'bedroom.html',
+            controller : 'BedroomController'
         })
         .otherwise({
              rediretTo : '/'

@@ -6,25 +6,25 @@
     <table go-data-table edit-url="#/pessoas" ajax="../api/persons/paginate" id="dt-list" class="display table table-hover" cellspacing="0" width="100%">
         <thead>
         <tr class="tr-cabecalho">
-            <th go-data-table-item name ="id">Código</th>
-            <th go-data-table-item name ="name">Nome</th>
-            <th go-data-table-item name ="sex">Sexo</th>
-            <th go-data-table-item name ="state">Situação</th>
-            <th style="width: 5%"></th>
-            <th style="width: 5%"></th>
+            <th go-data-table-item name ="id"    width="5%">Código</th>
+            <th go-data-table-item name ="name"  width="40%">Nome</th>
+            <th go-data-table-item name ="sex"   width="15%">Sexo</th>
+            <th go-data-table-item name ="state" width="15%">Situação</th>
+            <th width="3%"></th>
+            <th width="3%"></th>
         </tr>
         <tr class="tr-filtros">
-            <th style="width: 8%;"><input id="id-search"    restrict-to="[0-9]" type="text" placeholder="Código"/></th>
-            <th style="width: 52%;"><input id="name-search"  type="text" style="width: 100%;" placeholder="Nome"/></th>
-            <th style="width: 15%;">
-                <select id="sex-search" data-placeholder="Selecione o Sexo" class="form-control">
+            <th><input id="id-search" style="width: 100%" restrict-to="[0-9]" class="form-control" type="text" maxlength="8" placeholder="Cód."/></th>
+            <th><input id="name-search" style="width: 100%" type="text" class="form-control" maxlength="80" placeholder="Nome"/></th>
+            <th>
+                <select id="sex-search" style="width: 100%" data-placeholder="Selecione o Sexo" class="form-control">
                     <option value="">Selecione</option>
                     <option value="M">Masculino</option>
                     <option value="F">Feminino</option>
                 </select>
             </th>
-            <th style="width: 15%;">
-                <select id="state-search" class="form-control" placeholder="Selecione a Situação.">
+            <th>
+                <select id="state-search" style="width: 100%" class="form-control" placeholder="Selecione a Situação.">
                     <option value="">Selecione</option>
                     <option value="0">Candidato</option>
                     <option value="1">Selecionado</option>
@@ -33,8 +33,8 @@
                     <option value="4">Confirmado</option>
                 </select>
             </th>
-            <th style="width: 10%;">Editar</th>
-            <th style="width: 10%;">Remover</th>
+            <th>Editar</th>
+            <th>Remover</th>
         </tr>
         </thead>
     </table>
