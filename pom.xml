@@ -7,7 +7,7 @@
     <artifactId>journey-adm</artifactId>
     <version>1.0.0</version>
     <!--<packaging>${app-package}</packaging>-->
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <!--<thymeleaf.version>3.0.6.RELEASE</thymeleaf.version>-->
@@ -75,7 +75,7 @@
     </dependencies>
 
     <build>
-        <finalName>${app-name}</finalName>
+        <finalName>jouney-adm</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -95,11 +95,6 @@
             <id>dev</id>
             <properties>
                 <activatedProperties>dev</activatedProperties>
-                <!--<start-class>midianet.journey.Application</start-class>-->
-                <app-name>journey-adm</app-name>
-                <!--<app-context>/journey-adm</app-context>-->
-                <!--<app-package>jar</app-package>-->
-                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
             </properties>
@@ -111,11 +106,6 @@
             <id>prod</id>
             <properties>
                 <activatedProperties>prod</activatedProperties>
-                <start-class>midianet.journey.ApplicationWeb</start-class>
-                <app-name>journey-adm</app-name>
-                <app-context>/journey-adm</app-context>
-                <app-package>war</app-package>
-                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>journey-user</app-datasource-username>
                 <app-datasource-password>P@$w00rd</app-datasource-password>
             </properties>
