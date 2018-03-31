@@ -78,11 +78,11 @@
                     <div class="col-md-3 form-group">
                         <label for="state">Situação</label>
                         <select id="state" ng-model="person.state" class="form-control" placeholder="Selecione a Situação." required>
-                            <option value="0">Candidato</option>
-                            <option value="1">Selecionado</option>
-                            <option value="2">Associado</option>
-                            <option value="3">Registrado</option>
-                            <option value="4">Confirmado</option>
+                            <option value="W">Candidato</option>
+                            <option value="S">Selecionado</option>
+                            <option value="A">Associado</option>
+                            <option value="R">Registrado</option>
+                            <option value="C">Confirmado</option>
                         </select>
                         <span  style="color: #a94442;" ng-show="frm.state.$error.required && frm.state.$dirty">Campo Obrigatório</span>
                     </div>

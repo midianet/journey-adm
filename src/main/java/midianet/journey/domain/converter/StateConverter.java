@@ -6,15 +6,15 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter
-public class StateConverter implements AttributeConverter<Person.State, Integer> {
+public class StateConverter implements AttributeConverter<Person.State, String> {
 
 	@Override
-	public Integer convertToDatabaseColumn(Person.State value) {
+	public String convertToDatabaseColumn(Person.State value) {
 		return value.getValue();
 	}
 	
 	@Override
-	public Person.State convertToEntityAttribute(Integer value) {
+	public Person.State convertToEntityAttribute(String value) {
 		return Person.State.toEnum(value);
 	}
 	

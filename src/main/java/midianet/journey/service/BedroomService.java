@@ -23,7 +23,7 @@ public class BedroomService {
 
     @Transactional(rollbackOn = {DataIntegrityViolationException.class, Exception.class})
     public void delete(Long id){
-        repository.deleteById(id);
+        repository.delete(id);
     }
 
 }

@@ -6,12 +6,11 @@
     <groupId>midianet</groupId>
     <artifactId>journey-adm</artifactId>
     <version>1.0.0</version>
-    <!--<packaging>${app-package}</packaging>-->
-    <packaging>war</packaging>
+    <packaging>${app-package}</packaging>
 
     <properties>
-        <!--<thymeleaf.version>3.0.6.RELEASE</thymeleaf.version>-->
-        <!--<thymeleaf-layout-dialect.version>2.2.1</thymeleaf-layout-dialect.version>-->
+        <thymeleaf.version>3.0.6.RELEASE</thymeleaf.version>
+        <thymeleaf-layout-dialect.version>2.2.1</thymeleaf-layout-dialect.version>
         <java.version>1.8</java.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -20,15 +19,30 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.RELEASE</version>
+        <version>1.5.8.RELEASE</version>
     </parent>
 
     <dependencies>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,15 +54,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.boot</groupId>-->
-            <!--<artifactId>spring-boot-starter-security</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -58,6 +67,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <version>9.4.1212</version>
         </dependency>
 
         <dependency>
@@ -82,12 +92,12 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <!-- <resources>
+        <resources>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
             </resource>
-        </resources> -->
+        </resources>
     </build>
 
     <profiles>
@@ -95,6 +105,11 @@
             <id>dev</id>
             <properties>
                 <activatedProperties>dev</activatedProperties>
+                <start-class>midianet.journey.Application</start-class>
+                <app-name>journey-adm</app-name>
+                <app-context>/journey-adm</app-context>
+                <app-package>jar</app-package>
+                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
             </properties>
@@ -106,6 +121,11 @@
             <id>prod</id>
             <properties>
                 <activatedProperties>prod</activatedProperties>
+                <start-class>midianet.journey.ApplicationWeb</start-class>
+                <app-name>journey-adm</app-name>
+                <app-context>/journey-adm</app-context>
+                <app-package>war</app-package>
+                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>journey-user</app-datasource-username>
                 <app-datasource-password>P@$w00rd</app-datasource-password>
             </properties>

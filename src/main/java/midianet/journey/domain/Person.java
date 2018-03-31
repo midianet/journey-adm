@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 import midianet.journey.domain.converter.ContractConverter;
+import midianet.journey.domain.converter.LocalDateConverter;
 import midianet.journey.domain.converter.SexConverter;
 import midianet.journey.domain.converter.StateConverter;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
 import javax.persistence.criteria.Predicate;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import java.time.LocalDate;
@@ -57,13 +58,14 @@ public class Person {
 
     @NotNull
     @Column(nullable = false)
-    @JsonFormat(pattern="dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate register;
 
     private Integer assent;
-
-    @Past
-    @JsonFormat(pattern="dd-MM-yyyy")
+    
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate birthday;
 
     @NotNull
@@ -92,10 +94,14 @@ public class Person {
     public enum Sex {
         MALE  ("M","Masculino"),
         FEMALE("F","Feminino");
-
-        @JsonValue
+        
         private String value;
         private String description;
+    
+        @JsonValue
+        public String getValue(){
+            return value;
+        }
         
         public static Sex toEnum(String value){
             for (Sex e : Sex.values()) {
@@ -111,17 +117,21 @@ public class Person {
     @Getter
     @AllArgsConstructor
     public enum State{
-        WAITING   (0,"Candidato"),
-        SELECTED  (1,"Selecionado"),
-        ASSOCIATE (2,"Associado"),
-        REGISTERED(3,"Registrado"),
-        CONFIRMED (4,"Confirmado");
+        WAITING   ("W","Candidato"),
+        SELECTED  ("S","Selecionado"),
+        ASSOCIATE ("A","Associado"),
+        REGISTERED("R","Registrado"),
+        CONFIRMED ("C","Confirmado");
 
-        @JsonValue
-        private Integer value;
+        private String value;
         private String  description;
+    
+        @JsonValue
+        public String getValue(){
+            return value;
+        }
         
-        public static State toEnum(Integer value) {
+        public static State toEnum(String value) {
             for (State e : State.values()) {
                 if(e.value.equals(value)){
                     return e;
@@ -139,9 +149,14 @@ public class Person {
         AGREE  ("A","Aceito"),
         DISAGRE("D","Não Aceito");
 
-        @JsonValue
+        
         private String value;
         private String description;
+    
+        @JsonValue
+        public String getValue(){
+            return value;
+        }
         
         public static Contract toEnum(String value) {
             for (Contract e : Contract.values()) {
@@ -154,7 +169,7 @@ public class Person {
         
     }
 	
-	public static Specification<Person> filter(final Long id, final String name, final String sex, final Integer state) {
+	public static Specification<Person> filter(final Long id, final String name, final String sex, final String state) {
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			final List<Predicate> predicates = new ArrayList<>();
 			Optional.ofNullable(id)   .ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get("id"), l)));

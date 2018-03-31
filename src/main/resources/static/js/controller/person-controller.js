@@ -6,7 +6,7 @@ app.controller('PersonController', ['$scope','$http','$location','$routeParams',
 
         $scope.save = function (){
             var method =  $scope.person.id ? 'PUT' : 'POST';
-            var url    =  $scope.person.id ? '../api/persons/'  + $scope.person.id : '../api/persons/';
+            var url    =  $scope.person.id ? 'api/persons/'  + $scope.person.id : 'api/persons/';
             var msg    =  $scope.person.id ? 'Alterado com sucesso' : 'Criado com sucesso';
             $http({method: method, url: url  ,data:$scope.person})
                 .then(function (){
@@ -24,7 +24,7 @@ app.controller('PersonController', ['$scope','$http','$location','$routeParams',
         };
 
         $scope.deleteObject = function(id){
-            $http({method: 'DELETE', url:'../api/persons/' + id})
+            $http({method: 'DELETE', url:'api/persons/' + id})
                 .then(function (response){
                     $('#dt-list').DataTable().ajax.reload();
                     $.notify({message : "Removido com sucesso."},
@@ -41,7 +41,7 @@ app.controller('PersonController', ['$scope','$http','$location','$routeParams',
         };
 
        $scope.listBedroons = function (){
-           $http({method: 'GET', url: '../api/bedroons/'})
+           $http({method: 'GET', url: 'api/bedroons/'})
                .then(function (response){
                    $scope.bedroons =  response.data;
                    $("#bedroom").each(function() {
@@ -59,7 +59,7 @@ app.controller('PersonController', ['$scope','$http','$location','$routeParams',
        };
 
         if($routeParams.id && $routeParams.id != 'new') {
-            $http({method: 'GET', url: '../api/bedroons/'})
+            $http({method: 'GET', url: 'api/bedroons/'})
                 .then(function (response){
                     $scope.bedroons =  response.data;
                     $("#bedroom").each(function() {
@@ -67,7 +67,7 @@ app.controller('PersonController', ['$scope','$http','$location','$routeParams',
                                          placeholder: "Quarto"},
                                          {data: $(this).data()});
                     });
-                    $http({method: 'GET', url:'../api/persons/' + $routeParams.id})
+                    $http({method: 'GET', url:'api/persons/' + $routeParams.id})
                         .then(function (response){
                             $scope.person = response.data;
                             if($scope.person.bedroom) {

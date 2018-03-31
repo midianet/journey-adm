@@ -2,11 +2,8 @@ package midianet.journey.resource;
 
 import midianet.journey.domain.Datatable;
 import midianet.journey.domain.Payment;
-import midianet.journey.domain.Person;
 import midianet.journey.repository.PaymentRepository;
-import midianet.journey.repository.PersonRepository;
 import midianet.journey.service.PaymentService;
-import midianet.journey.service.PersonService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,14 +98,14 @@ public class PaymentResource {
         try {
             Long qtTotal = repository.count();
             Integer page      = new Double(Math.ceil(start / length)).intValue();
-            PageRequest pr    = PageRequest.of(page,length,Sort.by(Sort.Direction.fromString(orderDir),columns[order]));
+            PageRequest pr = new PageRequest(page,length, new Sort(new Sort.Order(Sort.Direction.fromString(orderDir),columns[order])));
             Page<Payment> list = !id.isEmpty() || !person.isEmpty() || !date.isEmpty() || !amount.isEmpty() ? repository.findAll(Payment.filter(myId,myPerson, myDate, myAmount),pr) : repository.findAll(pr);
             Long qtFilter     = list.getTotalElements();
             if (qtFilter > 0) {
                 list.forEach(e  -> {
                     HashMap<String  ,Object> l = new HashMap<>();
                     l.put("person"  ,e.getPerson().getName());
-                    l.put("date"    ,e.getDate());
+                    l.put("date"    ,e.getDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
                     l.put("amount"  ,e.getAmount());
                     l.put("DT_RowId","row_" + e.getId());
                     l.put("id"      ,e.getId());

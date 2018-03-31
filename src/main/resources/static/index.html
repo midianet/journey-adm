@@ -1,9 +1,75 @@
 <!DOCTYPE html>
-<html>
+<html xmlns     = "http://www.w3.org/1999/xhtml"
+      ng-app    = "App"
+      lang      = "en">
     <head>
-        <meta http-equiv="refresh" content="0; url=app/index.html">
-    </head>
+        <title>Journey Adm</title>
+        <meta charset="utf-8"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+        <link href="node_modules/datatables-select/css/select.dataTables.css" rel="stylesheet" type="text/css">
+        <link href="node_modules/datatables-buttons/css/buttons.dataTables.css" rel="stylesheet" type="text/css">
+        <link href="node_modules/datatables.net-dt/css/jquery.dataTables.css" rel="stylesheet" type="text/css">
+        <link href="node_modules/datatables.net-responsive-dt/css/responsive.dataTables.css" rel="stylesheet" type="text/css" >
+        <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="node_modules/select2/dist/css/select2.css" rel="stylesheet" type="text/css" >
+        <link href="node_modules/bootstrap-datepicker/css/bootstrap-datepicker.css" type="text/css" />
+        <style>
+            .navbar {
+                margin-bottom: 0;
+                border-radius: 0;
+            }
+        </style>
+        </head>
     <body>
-        <a href="app/index.html">App</a></p>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Bot Admin</a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#/">Home</a></li>
+                        <li><a href="#/pessoas">Pessoas</a></li>
+                        <li><a href="#/pagamentos">Pagamentos</a></li>
+                        <li><a href="#/quartos">Quartos</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <form  name="flogout" action="logout" method="post">
+                            </form>
+                            <a href="#" onclick="flogout.submit();"><span class="fa fa-sign-outfa fa-sign-out"></span> Sair</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid">
+            <div ng-view = ""></div>
+        </div>
     </body>
 </html>
+<script src="node_modules/jquery/dist/jquery.js"></script>
+<script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="node_modules/angular/angular.js"></script>
+<script src="node_modules/angular-route/angular-route.js"></script>
+<script src="node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script src="node_modules/datatables.net-responsive/js/dataTables.responsive.js"></script>
+<script src="node_modules/bootstrap-notify/bootstrap-notify.js"></script>
+<script src="node_modules/select2/dist/js/select2.js"></script>
+<script src="node_modules/bootbox/bootbox.js"></script>
+<script src="node_modules/go-data-table/goDataTable.js"></script>
+<script src="node_modules/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="node_modules/angular-input-masks/releases/angular-input-masks-standalone.js"></script>
+
+<script src="js/app.js"></script>
+<script src="js/controller/main-controller.js"></script>
+<script src="js/controller/person-controller.js"></script>
+<script src="js/controller/payment-controller.js"></script>
+<script src="js/controller/bedroom-controller.js"></script>

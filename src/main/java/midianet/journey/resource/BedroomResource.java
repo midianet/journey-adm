@@ -93,8 +93,8 @@ public class BedroomResource {
         dt.setDraw(draw);
         try {
             Long qtTotal = repository.count();
-            Integer page      = new Double(Math.ceil(start / length)).intValue();
-            PageRequest pr    = PageRequest.of(page,length,Sort.by(Sort.Direction.fromString(orderDir),columns[order]));
+            Integer page   = new Double(Math.ceil(start / length)).intValue();
+            PageRequest pr = new PageRequest(page,length, new Sort(new Sort.Order(Sort.Direction.fromString(orderDir),columns[order])));
             Page<Bedroom> list =  !id.isEmpty() || !description.isEmpty() || !type.isEmpty() || !gender.isEmpty() ? repository.findAll(Bedroom.filter(myId,description, myType, myGender),pr) : repository.findAll(pr);
             Long qtFilter     = list.getTotalElements();
             if (qtFilter > 0) {

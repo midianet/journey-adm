@@ -4,13 +4,12 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.*;
 import midianet.journey.domain.converter.GenderConverter;
-import midianet.journey.domain.converter.StateConverter;
 import midianet.journey.domain.converter.TypeConverter;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
 import javax.persistence.criteria.Predicate;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,13 +37,13 @@ public class Bedroom {
     @NotNull
     @Column(length = 1,nullable = false)
     @Convert(converter = TypeConverter.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    //@JsonFormat(shape = JsonFormat.Shape.STRING)
     private Type         type;
     
     @NotNull
     @Column(length = 1,nullable = false)
     @Convert(converter = GenderConverter.class)
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    //@JsonFormat(shape = JsonFormat.Shape.STRING)
     private Gender       gender;
     
     @Getter
@@ -54,9 +53,13 @@ public class Bedroom {
         TRIPLE    ("T","Quarto Triplo"),
         QUADRUPLE ("Q","Quarto Quádruplo");
         
-        @JsonValue
         private String value;
         private String  description;
+    
+        @JsonValue
+        public String getValue(){
+            return value;
+        }
         
         public static Bedroom.Type toEnum(String value){
             for (Bedroom.Type e : Bedroom.Type.values()) {
@@ -76,9 +79,14 @@ public class Bedroom {
         ROOM_MALE   ("M","Masculino"),
         ROOM_COUPLE ("U","Misto");
     
-        @JsonValue
+    
         private String value;
         private String  description;
+    
+        @JsonValue
+        public String getValue(){
+            return value;
+        }
         
         public static Bedroom.Gender toEnum(String value){
             for (Bedroom.Gender e : Bedroom.Gender.values()) {

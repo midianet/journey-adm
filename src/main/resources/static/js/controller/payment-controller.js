@@ -4,7 +4,7 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
 
         $scope.save = function (){
             var method =  $scope.payment.id ? 'PUT' : 'POST';
-            var url    =  $scope.payment.id ? '../api/payments/'  + $scope.payment.id : '../api/payments/';
+            var url    =  $scope.payment.id ? 'api/payments/'  + $scope.payment.id : 'api/payments/';
             var msg    =  $scope.payment.id ? 'Alterado com sucesso' : 'Criado com sucesso';
             $http({method: method, url: url  ,data:$scope.payment})
                 .then(function (){
@@ -22,7 +22,7 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
         };
 
         $scope.deleteObject = function(id){
-            $http({method: 'DELETE', url:'../api/payments/' + id})
+            $http({method: 'DELETE', url:'api/payments/' + id})
                 .then(function (response){
                     $('#dt-list').DataTable().ajax.reload();
                     $.notify({message : "Removido com sucesso."},
@@ -39,7 +39,7 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
         };
 
        $scope.listPersons = function (){
-           $http({method: 'GET', url: '../api/persons/'})
+           $http({method: 'GET', url: 'api/persons/'})
                .then(function (response){
                    $scope.persons =  response.data;
                    $("#person-search").each(function() {
@@ -57,7 +57,7 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
        };
 
         if($routeParams.id && $routeParams.id != 'new') {
-            $http({method: 'GET', url: '../api/persons/'})
+            $http({method: 'GET', url: 'api/persons/'})
                 .then(function (response){
                     $scope.persons =  response.data;
                     $("#person-search").each(function() {
@@ -65,7 +65,7 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
                                 placeholder: "Pessoa"},
                             {data: $(this).data()});
                     });
-                    $http({method: 'GET', url:'../api/payments/' + $routeParams.id})
+                    $http({method: 'GET', url:'api/payments/' + $routeParams.id})
                         .then(function (response){
                             $scope.payment = response.data;
                             setTimeout(function(){

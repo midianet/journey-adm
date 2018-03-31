@@ -1,18 +1,15 @@
 package midianet.journey.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.*;
-import midianet.journey.domain.converter.ContractConverter;
-import midianet.journey.domain.converter.SexConverter;
-import midianet.journey.domain.converter.StateConverter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import midianet.journey.domain.converter.LocalDateConverter;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.Predicate;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -34,10 +31,12 @@ public class Payment {
 
     @NotNull
     @Column(nullable = false)
-    @JsonFormat(pattern="dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+    @Convert(converter = LocalDateConverter.class)
     private LocalDate date;
-    
-    @JsonFormat(pattern="dd-MM-yyyy")
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="dd-MM-yyyy")
+	@Convert(converter = LocalDateConverter.class)
     private LocalDate dateLow;
     
     @NotNull
@@ -48,7 +47,7 @@ public class Payment {
     @ManyToOne
     private Person person;
 	
-	public static Specification<Payment> filter(Long id, Long idPerson, LocalDate date , BigDecimal amount){//}, final BigDecimal amount) {
+	public static Specification<Payment> filter(Long id, Long idPerson, LocalDate date , BigDecimal amount){
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
 			Optional.ofNullable(id)      .ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get      ("id"), l)));

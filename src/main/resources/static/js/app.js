@@ -3,31 +3,31 @@ var app = angular.module('App', ['ngRoute','goDataTable','ui.utils.masks']);
 app.config(function($routeProvider, $locationProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'main.html',
+            templateUrl: 'app/main.html',
             controller: 'MainController'
         })
         .when('/pessoas', {
-            templateUrl: 'persons.html',
+            templateUrl: 'app/persons.html',
             controller:  'PersonController'
         })
         .when('/pessoas/:id', {
-            templateUrl: 'person.html',
+            templateUrl: 'app/person.html',
             controller:  'PersonController'
         })
         .when('/pagamentos', {
-        templateUrl: 'payments.html',
+        templateUrl: 'app/payments.html',
         controller:  'PaymentController'
     })
         .when('/pagamentos/:id', {
-            templateUrl: 'payment.html',
+            templateUrl: 'app/payment.html',
             controller: 'PaymentController'
         })
         .when('/quartos', {
-            templateUrl: 'bedroons.html',
+            templateUrl: 'app/bedroons.html',
             controller : 'BedroomController'
         })
         .when('/quartos/:id', {
-            templateUrl: 'bedroom.html',
+            templateUrl: 'app/bedroom.html',
             controller : 'BedroomController'
         })
         .otherwise({
