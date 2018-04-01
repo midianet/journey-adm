@@ -1,0 +1,18 @@
+<div class="dataTable_wrapper">
+    <legend class="section" style="font-weight: 600;"> Visualizar Foto</legend>
+    <div style="float: right;">
+        <a href="#/fotos" class=" btn btn-primary" >Voltar <i class="fa fa-reply"></i></a>
+    </div>
+    <div class="row" style="padding-top:3em;">
+        <legend class="section" style="font-weight: 600;"></legend>
+        <form novalidate action="" name="frm" id="frm">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <img ng-src="data:image/JPEG;base64,{{photo.photo}}">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

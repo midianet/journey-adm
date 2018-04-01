@@ -30,6 +30,14 @@ app.config(function($routeProvider, $locationProvider) {
             templateUrl: 'app/bedroom.html',
             controller : 'BedroomController'
         })
+        .when('/fotos', {
+            templateUrl: 'app/photos.html',
+            controller : 'PhotoController'
+        })
+        .when('/fotos/:id', {
+            templateUrl: 'app/photo.html',
+            controller : 'PhotoController'
+        })
         .otherwise({
              rediretTo : '/'
         });

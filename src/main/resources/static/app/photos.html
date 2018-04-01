@@ -1,0 +1,36 @@
+<div class="dataTable_wrapper">
+    <legend class="section" style="font-weight: 600;"> Fotos</legend>
+    <table go-data-table edit-url="#/fotos" ajax="api/photos/paginate" id="dt-list" class="display table table-hover" cellspacing="0" width="100%">
+        <thead>
+        <tr class="tr-cabecalho">
+            <th go-data-table-item name ="id"     width="5%">Código</th>
+            <th go-data-table-item name ="person" width="40%">Pessoa</th>
+            <th go-data-table-item name ="date"   width="15%">Data</th>
+            <th width="3%"></th>
+            <th width="3%"></th>
+        </tr>
+        <tr class="tr-filtros">
+            <th><input id="id-search" style="width: 100%" restrict-to="[0-9]" class="form-control" type="text" maxlength="8" placeholder="Cód."/></th>
+            <th>
+                <select id="person-search" class="form-control" placeholder="Selecione a pessoa.">
+                    <option value="">Filtrar por Pessoa</option>
+                    <option ng-repeat="p in persons"  value="{{p.id}}">{{p.name}}</option>
+                </select>
+            </th>
+            <th>
+                <input type="text" class="form-control" id="date-search" name="date-search" maxlength="10" style="width: 100%" />
+            </th>
+            <th>Visualizar</th>
+            <th>Remover</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<script>
+    $('#date-search').datepicker({
+        format: 'dd-mm-yyyy',
+        locale: 'pt-br',
+        startDate:'01-03-2018',
+        endDate:'1d'
+    });
+</script>

@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface PersonRepository extends JpaRepository<Person,Long>, JpaSpecificationExecutor {
 	Optional<Person> findById(Long id);
+	Optional<Person> findByTelegram(Long telegram);
 }

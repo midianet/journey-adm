@@ -1,24 +1,22 @@
 package midianet.journey.resource;
 
 import midianet.journey.domain.Datatable;
-import midianet.journey.domain.Payment;
-import midianet.journey.repository.PaymentRepository;
-import midianet.journey.service.PaymentService;
+import midianet.journey.domain.Person;
+import midianet.journey.domain.Photo;
+import midianet.journey.repository.PersonRepository;
+import midianet.journey.repository.PhotoRepository;
+import midianet.journey.service.PhotoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,52 +24,55 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/payments")
-public class PaymentResource {
-    private Logger log = LoggerFactory.getLogger(PaymentResource.class);
+@RequestMapping("/api/photos")
+public class PhotoResource {
+    private Logger log = LoggerFactory.getLogger(PhotoResource.class);
 
     @Autowired
-    private PaymentRepository repository;
-
+    private PhotoRepository repository;
+    
     @Autowired
-    private PaymentService service;
+    private PersonRepository personRepository;
+    
+    @Autowired
+    private PhotoService service;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Payment> list(){
+    public List<Photo> list(){
         return repository.findAll(new Sort(Sort.Direction.DESC, "date"));
     }
 
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Payment findById(@PathVariable Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Payment %d", id)));
+    public Photo findById(@PathVariable Long id){
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Photo %d", id)));
     }
-
-    @PostMapping
-    @Transactional
-    @ResponseStatus(HttpStatus.CREATED)
-    public Payment create(@RequestBody Payment payment, HttpServletResponse response){
-        payment.setId(null);
-        Payment n = service.save(payment);
-        response.addHeader(HttpHeaders.LOCATION,String.format("/api/payments/%d", n.getId()));
-        return n;
-    }
-
-    @Transactional
-    @PutMapping(path = "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public Payment update(@PathVariable final Long id, @RequestBody final Payment payment){
-        payment.setId(id);
-        service.save(payment);
-        return payment;
-    }
+//
+//    @PostMapping
+//    @Transactional
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Photo create(@RequestBody Photo bedroom, HttpServletResponse response){
+//        bedroom.setId(null);
+//        Photo n = service.save(bedroom);
+//        response.addHeader(HttpHeaders.LOCATION,String.format("/api/bedroons/%d", n.getId()));
+//        return n;
+//    }
+//
+//    @Transactional
+//    @PutMapping(path = "/{id}")
+//    @ResponseStatus(HttpStatus.OK)
+//    public Photo update(@PathVariable final Long id, @RequestBody final Photo bedroom){
+//        bedroom.setId(id);
+//        service.save(bedroom);
+//        return bedroom;
+//    }
 
     @Transactional
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable final Long id){
-        Payment e = findById(id);
+        Photo e = findById(id);
         service.delete(e.getId());
     }
 
@@ -84,31 +85,29 @@ public class PaymentResource {
                               @RequestParam("columns[0][search][value]") String  id,
                               @RequestParam("columns[1][search][value]") String  person,
                               @RequestParam("columns[2][search][value]") String  date,
-                              @RequestParam("columns[3][search][value]") String  amount,
                               @RequestParam("order[0][column]")          Integer order,
                               @RequestParam("order[0][dir]")             String  orderDir){
-        String[] columns = new String[]{"id", "person", "date", "amount"};
+        String[] columns = new String[]{"id", "person", "date"};
         List<Map<String, Object>> data = new ArrayList<>();
         Datatable dt = new Datatable();
         Long myId = id.isEmpty() ? null : Long.parseLong(id);
-        Long myPerson = person.isEmpty() ? null: Long.parseLong(person);
-        LocalDate myDate = date.length() != 10 ? null : LocalDate.parse(date,DateTimeFormatter.ofPattern("dd-MM-yyyy"));
-        BigDecimal myAmount = amount.isEmpty() ? null : BigDecimal.valueOf(Double.parseDouble(amount.replace("$","").trim()));
+        String myPerson =  person.isEmpty() ? null : person;
+        String myDate   =  date.isEmpty()   ? null : date;
         dt.setDraw(draw);
         try {
             Long qtTotal = repository.count();
-            Integer page      = new Double(Math.ceil(start / length)).intValue();
+            Integer page   = new Double(Math.ceil(start / length)).intValue();
             PageRequest pr = new PageRequest(page,length, new Sort(new Sort.Order(Sort.Direction.fromString(orderDir),columns[order])));
-            Page<Payment> list = !id.isEmpty() || !person.isEmpty() || !date.isEmpty() || !amount.isEmpty() ? repository.findAll(Payment.filter(myId,myPerson, myDate, myAmount),pr) : repository.findAll(pr);
+            Page<Photo> list =  repository.findAll(pr); //!id.isEmpty() || !description.isEmpty() || !type.isEmpty() || !gender.isEmpty() ? repository.findAll(Photo.filter(myId,description, myType, myGender),pr) : repository.findAll(pr);
+            list.forEach(p -> p.setPerson(personRepository.findByTelegram(p.getTelegram()).orElse(Person.builder().build())));
             Long qtFilter     = list.getTotalElements();
             if (qtFilter > 0) {
                 list.forEach(e  -> {
                     HashMap<String  ,Object> l = new HashMap<>();
-                    l.put("person"  ,e.getPerson().getName());
-                    l.put("date"    ,e.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-                    l.put("amount"  ,e.getAmount());
-                    l.put("DT_RowId","row_" + e.getId());
-                    l.put("id"      ,e.getId());
+                    l.put("person"     ,e.getPerson().getName());
+                    l.put("date"       ,e.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+                    l.put("DT_RowId"   ,"row_" + e.getId());
+                    l.put("id"         ,e.getId());
                     data.add(l);});
             }
             dt.setRecordsFiltered(qtFilter);
