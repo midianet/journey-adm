@@ -76,14 +76,20 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
                });
        };
 
-       $scope.test = function (){
+       $scope.showPhoto = function (){
             if($scope.payment.photo.id){
-                var filtered = $scope.photos.filter(function(el) {
-                   return el.id === parseInt($scope.payment.photo.id);
-               });
-               $scope.photo = filtered.length > 0 ? filtered[0] : null;
+                $http({method: 'GET', url: 'api/photos/' + $scope.payment.photo.id })
+                    .then(function (response){
+                        $scope.photo =  response.data;
+                    } , function (response){
+                        console.log(response.data);
+                        console.log(response.status);
+                        $.notify({message : response.data.message},
+                            {type  : 'danger',
+                                offset: {x: 10, y: 59}});
+                    });
             }else{
-               $scope.photo = nulll;
+               $scope.photo = null;
             }
        }
 

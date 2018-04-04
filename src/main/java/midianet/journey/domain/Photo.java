@@ -1,6 +1,7 @@
 package midianet.journey.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import groovy.lang.Lazy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

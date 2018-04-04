@@ -41,7 +41,9 @@ public class PhotoResource {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Photo> list(){
-        return repository.findAll(new Sort(Sort.Direction.DESC, "date"));
+        List<Photo> l = repository.findAll(new Sort(Sort.Direction.DESC, "date"));
+        l.forEach(p -> p.setPhoto(null));
+        return l;
     }
 
     @GetMapping(path = "/{id}")
