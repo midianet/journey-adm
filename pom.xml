@@ -112,6 +112,7 @@
                 <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
+                <show-sql>true</show-sql>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -128,6 +129,7 @@
                 <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>journey-user</app-datasource-username>
                 <app-datasource-password>P@$w00rd</app-datasource-password>
+                <show-sql>false</show-sql>
             </properties>
             <dependencies>
                 <dependency>
