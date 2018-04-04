@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,14 +92,15 @@ public class PhotoResource {
         List<Map<String, Object>> data = new ArrayList<>();
         Datatable dt = new Datatable();
         Long myId = id.isEmpty() ? null : Long.parseLong(id);
-        String myPerson =  person.isEmpty() ? null : person;
-        String myDate   =  date.isEmpty()   ? null : date;
+        Person myPerson =  person.isEmpty() ? null : personRepository.findById(Long.parseLong(person)).orElse(new Person());
+        Long myTelegram =  person.isEmpty() ? null : myPerson.getTelegram();
+        LocalDate myDate = date.length() != 10 ? null : LocalDate.parse(date,DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         dt.setDraw(draw);
         try {
             Long qtTotal = repository.count();
             Integer page   = new Double(Math.ceil(start / length)).intValue();
             PageRequest pr = new PageRequest(page,length, new Sort(new Sort.Order(Sort.Direction.fromString(orderDir),columns[order])));
-            Page<Photo> list =  repository.findAll(pr); //!id.isEmpty() || !description.isEmpty() || !type.isEmpty() || !gender.isEmpty() ? repository.findAll(Photo.filter(myId,description, myType, myGender),pr) : repository.findAll(pr);
+            Page<Photo> list =  !id.isEmpty() || !person.isEmpty() || !date.isEmpty() ? repository.findAll(Photo.filter(myId,myTelegram, myDate),pr) : repository.findAll(pr);
             list.forEach(p -> p.setPerson(personRepository.findByTelegram(p.getTelegram()).orElse(Person.builder().build())));
             Long qtFilter     = list.getTotalElements();
             if (qtFilter > 0) {

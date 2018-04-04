@@ -29,25 +29,25 @@ import java.util.Map;
 @RequestMapping("/api/payments")
 public class PaymentResource {
     private Logger log = LoggerFactory.getLogger(PaymentResource.class);
-
+    
     @Autowired
     private PaymentRepository repository;
-
+    
     @Autowired
     private PaymentService service;
-
+    
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Payment> list(){
         return repository.findAll(new Sort(Sort.Direction.DESC, "date"));
     }
-
+    
     @GetMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Payment findById(@PathVariable Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Payment %d", id)));
     }
-
+    
     @PostMapping
     @Transactional
     @ResponseStatus(HttpStatus.CREATED)
@@ -57,7 +57,7 @@ public class PaymentResource {
         response.addHeader(HttpHeaders.LOCATION,String.format("/api/payments/%d", n.getId()));
         return n;
     }
-
+    
     @Transactional
     @PutMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -66,7 +66,7 @@ public class PaymentResource {
         service.save(payment);
         return payment;
     }
-
+    
     @Transactional
     @DeleteMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
@@ -74,7 +74,7 @@ public class PaymentResource {
         Payment e = findById(id);
         service.delete(e.getId());
     }
-
+    
     @GetMapping(path = "/paginate")
     @ResponseStatus(HttpStatus.OK)
     public Datatable paginate(@RequestParam("draw")                      Long    draw,
@@ -120,5 +120,5 @@ public class PaymentResource {
         }
         return dt;
     }
-
+    
 }
