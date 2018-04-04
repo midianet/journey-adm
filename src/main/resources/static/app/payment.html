@@ -35,6 +35,21 @@
                         <span  style="color: #a94442;" ng-show="frm.amount.$error.required && frm.amount.$dirty">Campo Obrigatório</span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-4 form-group">
+                        <label for="photo">Foto</label>
+                        <select id="photo" class="form-control" ng-model="payment.photo.id" placeholder="Selecione a Foto." ng-change="test()" required>
+                            <option value="">Filtrar por Foto</option>
+                            <option ng-repeat="p in photos"  value="{{p.id}}">{{p.id}}</option>
+                        </select>
+                        <span  style="color: #a94442;" ng-show="frm.photo.$error.required && frm.photo.$dirty">Campo Obrigatório</span>
+                    </div>
+                    <div class="col-md-8 form-group">
+                        <img  style="width: inherit; height: inherit" ng-src="data:image/JPEG;base64,{{photo.photo}}">
+                    </div>
+
+                </div>
+
             </div>
         </form>
     </div>

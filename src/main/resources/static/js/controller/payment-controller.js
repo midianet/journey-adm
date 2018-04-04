@@ -1,6 +1,8 @@
 app.controller('PaymentController', ['$scope','$http','$location','$routeParams',
                function ($scope,$http,$location,$routeParams) {
         $scope.payment = {};
+        $scope.photos  = [];
+        $scope.photo   = {};
 
         $scope.save = function (){
             var method =  $scope.payment.id ? 'PUT' : 'POST';
@@ -56,23 +58,74 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
                });
        };
 
+       $scope.listPhotos = function (){
+           $http({method: 'GET', url: 'api/photos/'})
+               .then(function (response){
+                   $scope.photos =  response.data;
+                   $("#photo").each(function() {
+                       $(this).select2({allowClear: true,
+                               placeholder: "Foto"},
+                           {data: $(this).data()});
+                   });
+               } , function (response){
+                   console.log(response.data);
+                   console.log(response.status);
+                   $.notify({message : response.data.message},
+                       {type  : 'danger',
+                           offset: {x: 10, y: 59}});
+               });
+       };
+
+       $scope.test = function (){
+            if($scope.payment.photo.id){
+                var filtered = $scope.photos.filter(function(el) {
+                   return el.id === parseInt($scope.payment.photo.id);
+               });
+               $scope.photo = filtered.length > 0 ? filtered[0] : null;
+            }else{
+               $scope.photo = nulll;
+            }
+       }
+
         if($routeParams.id && $routeParams.id != 'new') {
-            $http({method: 'GET', url: 'api/persons/'})
+            $http({method: 'GET', url: 'api/photos/'})
                 .then(function (response){
-                    $scope.persons =  response.data;
-                    $("#person-search").each(function() {
+                    $scope.photos =  response.data;
+                    $("#photo").each(function() {
                         $(this).select2({allowClear: true,
-                                placeholder: "Pessoa"},
+                                placeholder: "Foto"},
                             {data: $(this).data()});
                     });
-                    $http({method: 'GET', url:'api/payments/' + $routeParams.id})
+                    $http({method: 'GET', url: 'api/persons/'})
                         .then(function (response){
-                            $scope.payment = response.data;
-                            setTimeout(function(){
-                                $scope.propagate = false;
-                                $("#person-search").val($scope.payment.person.id).trigger("change");
-                                $scope.propagate = true;
-                            },0);
+                            $scope.persons =  response.data;
+                            $("#person-search").each(function() {
+                                $(this).select2({allowClear: true,
+                                        placeholder: "Pessoa"},
+                                    {data: $(this).data()});
+                            });
+                            $http({method: 'GET', url:'api/payments/' + $routeParams.id})
+                                .then(function (response){
+                                    $scope.payment = response.data;
+                                    setTimeout(function(){
+                                        $scope.propagate = false;
+                                        $("#person-search").val($scope.payment.person.id).trigger("change");
+                                        $scope.propagate = true;
+                                    },0);
+                                    setTimeout(function(){
+                                        $scope.propagate = false;
+                                        $("#photo").val($scope.payment.photo.id).trigger("change");
+                                        $scope.propagate = true;
+                                    },0);
+                                } , function (response){
+                                    console.log(response.data);
+                                    console.log(response.status);
+                                    $location.path('pagamentos');
+                                    $.notify({message : response.data.message},
+                                        {type : 'danger',
+                                            offset: {x: 10, y: 59}});
+                                });
+
                         } , function (response){
                             console.log(response.data);
                             console.log(response.status);
@@ -81,7 +134,6 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
                                 {type : 'danger',
                                     offset: {x: 10, y: 59}});
                         });
-
                 } , function (response){
                     console.log(response.data);
                     console.log(response.status);
@@ -92,6 +144,7 @@ app.controller('PaymentController', ['$scope','$http','$location','$routeParams'
                 });
         }else{
             $scope.listPersons();
+            $scope.listPhotos();
         }
     }
 

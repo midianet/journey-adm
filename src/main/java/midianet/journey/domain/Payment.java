@@ -40,20 +40,24 @@ public class Payment {
     private LocalDate dateLow;
     
     @NotNull
-    @Column
+    @Column(nullable = false)
     private BigDecimal amount;
+    
+    @NotNull
+    @ManyToOne
+    private Photo photo;
     
     @NotNull
     @ManyToOne
     private Person person;
 	
-	public static Specification<Payment> filter(Long id, Long idPerson, LocalDate date , BigDecimal amount){
+	public static Specification<Payment> filter(Long id, Long idPerson,LocalDate date , BigDecimal amount){
 		return (root, criteriaQuery, criteriaBuilder) -> {
 			List<Predicate> predicates = new ArrayList<>();
-			Optional.ofNullable(id)      .ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get      ("id"), l)));
-			Optional.ofNullable(idPerson).ifPresent(p -> predicates.add(criteriaBuilder.equal(root.<Long>get      ("person").get("id"), idPerson)));
-            Optional.ofNullable(date)    .ifPresent(d -> predicates.add(criteriaBuilder.equal(root.<Date>get      ("date"),d)));
-            Optional.ofNullable(amount)  .ifPresent(a -> predicates.add(criteriaBuilder.equal(root.<BigDecimal>get("amount"),a)));
+			Optional.ofNullable(id)      .ifPresent(l -> predicates.add(criteriaBuilder.equal(root.<Long>get   ("id"), l)));
+			Optional.ofNullable(idPerson).ifPresent(p -> predicates.add(criteriaBuilder.equal(root.<Long>get("person").get("id"), idPerson)));
+            Optional.ofNullable(date)    .ifPresent(d -> predicates.add(criteriaBuilder.equal(root.<Date>get   ("date"),d)));
+            Optional.ofNullable(amount)  .ifPresent(a -> predicates.add(criteriaBuilder.equal(root.<BigDecimal>get   ("amount"),a)));
 			return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
 		};
 	}
