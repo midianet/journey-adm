@@ -1,5 +1,6 @@
 package midianet.journey.service;
 
+import midianet.journey.domain.Photo;
 import midianet.journey.repository.PhotoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,6 +17,11 @@ public class PhotoService {
     @Transactional(rollbackOn = {DataIntegrityViolationException.class, Exception.class})
     public void delete(Long id){
         repository.delete(id);
+    }
+    
+    @Transactional(rollbackOn = {Exception.class})
+    public Photo save(Photo photo){
+        return repository.save(photo);
     }
 
 }

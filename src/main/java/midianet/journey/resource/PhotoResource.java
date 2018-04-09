@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -51,25 +53,25 @@ public class PhotoResource {
     public Photo findById(@PathVariable Long id){
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException(String.format("Photo %d", id)));
     }
-//
-//    @PostMapping
-//    @Transactional
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public Photo create(@RequestBody Photo bedroom, HttpServletResponse response){
-//        bedroom.setId(null);
-//        Photo n = service.save(bedroom);
-//        response.addHeader(HttpHeaders.LOCATION,String.format("/api/bedroons/%d", n.getId()));
-//        return n;
-//    }
-//
-//    @Transactional
-//    @PutMapping(path = "/{id}")
-//    @ResponseStatus(HttpStatus.OK)
-//    public Photo update(@PathVariable final Long id, @RequestBody final Photo bedroom){
-//        bedroom.setId(id);
-//        service.save(bedroom);
-//        return bedroom;
-//    }
+
+    @PostMapping
+    @Transactional
+    @ResponseStatus(HttpStatus.CREATED)
+    public Photo create(@RequestBody Photo photo, HttpServletResponse response){
+        photo.setId(null);
+        Photo n = service.save(photo);
+        response.addHeader(HttpHeaders.LOCATION,String.format("/api/photos/%d", n.getId()));
+        return n;
+    }
+
+    @Transactional
+    @PutMapping(path = "/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Photo update(@PathVariable final Long id, @RequestBody final Photo photo){
+        photo.setId(id);
+        service.save(photo);
+        return photo;
+    }
 
     @Transactional
     @DeleteMapping(path = "/{id}")
