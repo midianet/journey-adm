@@ -5,8 +5,8 @@
 
     <groupId>midianet</groupId>
     <artifactId>journey-adm</artifactId>
-    <version>1.0.1</version>
-    <packaging>${app-package}</packaging>
+    <version>2.0.0</version>
+    <packaging>jar</packaging>
 
     <properties>
         <thymeleaf.version>3.0.6.RELEASE</thymeleaf.version>
@@ -105,14 +105,12 @@
             <id>dev</id>
             <properties>
                 <activatedProperties>dev</activatedProperties>
-                <start-class>midianet.journey.Application</start-class>
                 <app-name>journey-adm</app-name>
-                <app-context>/journey-adm</app-context>
-                <app-package>jar</app-package>
-                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
+                <app-datasource-url>jdbc:postgresql://173.249.7.225:8732/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
-                <app-datasource-password>postgres</app-datasource-password>
+                <app-datasource-password>midianet</app-datasource-password>
                 <show-sql>true</show-sql>
+                <log-file>/opt/bots/log/journey-adm.log</log-file>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -122,22 +120,13 @@
             <id>prod</id>
             <properties>
                 <activatedProperties>prod</activatedProperties>
-                <start-class>midianet.journey.ApplicationWeb</start-class>
                 <app-name>journey-adm</app-name>
-                <app-context>/journey-adm</app-context>
-                <app-package>war</app-package>
-                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
-                <app-datasource-username>journey-user</app-datasource-username>
-                <app-datasource-password>P@$w00rd</app-datasource-password>
+                <app-datasource-url>jdbc:postgresql://172.18.0.3:5432/journey</app-datasource-url>
+                <app-datasource-username>postgres</app-datasource-username>
+                <app-datasource-password>midianet</app-datasource-password>
                 <show-sql>false</show-sql>
+                <log-file>/srv/bots/log/journey-adm.log</log-file>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
         </profile>
  
     </profiles>
