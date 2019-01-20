@@ -90,6 +90,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -99,6 +102,11 @@
         <profile>
             <id>dev</id>
             <properties>
+                <activatedProperties>dev</activatedProperties>
+                <start-class>midianet.journey.Application</start-class>
+                <app-name>journey-adm</app-name>
+                <app-context>/journey-adm</app-context>
+                <app-package>jar</app-package>
                 <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
@@ -116,6 +124,7 @@
                 <app-datasource-username>journey-user</app-datasource-username>
                 <app-datasource-password>P@$w00rd</app-datasource-password>
                 <show-sql>false</show-sql>
+                <log-file>/srv/bots/log/journey-adm.log</log-file>
             </properties>
         </profile>
  
