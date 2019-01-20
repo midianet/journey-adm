@@ -5,8 +5,8 @@
 
     <groupId>midianet</groupId>
     <artifactId>journey-adm</artifactId>
-    <version>1.0.1</version>
-    <packaging>${app-package}</packaging>
+    <version>1.0.2</version>
+    <packaging>jar</packaging>
 
     <properties>
         <thymeleaf.version>3.0.6.RELEASE</thymeleaf.version>
@@ -92,23 +92,13 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
     </build>
 
     <profiles>
+
         <profile>
             <id>dev</id>
             <properties>
-                <activatedProperties>dev</activatedProperties>
-                <start-class>midianet.journey.Application</start-class>
-                <app-name>journey-adm</app-name>
-                <app-context>/journey-adm</app-context>
-                <app-package>jar</app-package>
                 <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>postgres</app-datasource-username>
                 <app-datasource-password>postgres</app-datasource-password>
@@ -118,26 +108,15 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>
+
         <profile>
             <id>prod</id>
             <properties>
-                <activatedProperties>prod</activatedProperties>
-                <start-class>midianet.journey.ApplicationWeb</start-class>
-                <app-name>journey-adm</app-name>
-                <app-context>/journey-adm</app-context>
-                <app-package>war</app-package>
                 <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
                 <app-datasource-username>journey-user</app-datasource-username>
                 <app-datasource-password>P@$w00rd</app-datasource-password>
                 <show-sql>false</show-sql>
             </properties>
-            <dependencies>
-                <dependency>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                    <scope>provided</scope>
-                </dependency>
-            </dependencies>
         </profile>
  
     </profiles>
