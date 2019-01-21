@@ -120,7 +120,7 @@
         <profile>
             <id>prod</id>
             <properties>
-                <app-datasource-url>jdbc:postgresql://localhost:5432/journey</app-datasource-url>
+                <app-datasource-url>jdbc:postgresql://172.18.0.3:5432/journey</app-datasource-url>
                 <app-datasource-username>journey-user</app-datasource-username>
                 <app-datasource-password>P@$w00rd</app-datasource-password>
                 <show-sql>false</show-sql>
